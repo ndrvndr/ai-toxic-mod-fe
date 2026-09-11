@@ -1,3 +1,4 @@
+import { useRouter } from "@tanstack/react-router"
 import { LogOut } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -6,8 +7,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import type { CurrentUser } from "@/server/get-current-user"
-import { useRouter } from "@tanstack/react-router"
+import { AuthServices } from "@/features/auth/services/auth.service"
+import type { CurrentUser } from "@/types/auth"
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,10 +26,7 @@ export function NavUser({ user }: { user: CurrentUser }) {
   const router = useRouter()
 
   const handleLogout = async () => {
-    await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    })
+    await AuthServices.logout()
     router.navigate({ to: "/auth/login" })
   }
 

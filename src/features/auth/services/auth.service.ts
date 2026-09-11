@@ -1,14 +1,10 @@
 import { createServerFn } from "@tanstack/react-start"
 import { getRequestHeader } from "@tanstack/react-start/server"
 
-export interface CurrentUser {
-  id: string
-  email: string
-  displayName: string | null
-}
+import type { CurrentUser } from "@/types/auth"
 
-export const getCurrentUser = createServerFn({ method: "GET" }).handler(
-  async () => {
+export const AuthServices = {
+  getCurrentUser: createServerFn({ method: "GET" }).handler(async () => {
     const cookieHeader = getRequestHeader("cookie")
 
     const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
@@ -21,5 +17,12 @@ export const getCurrentUser = createServerFn({ method: "GET" }).handler(
 
     const { data } = (await response.json()) as { data: CurrentUser | null }
     return data
-  }
-)
+  }),
+
+  async logout(): Promise<void> {
+    await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+    })
+  },
+}
