@@ -14,9 +14,11 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
-import { Route as AuthenticatedDashboardHistoryRouteImport } from './routes/_authenticated/dashboard/history'
+import { Route as AuthenticatedDashboardHistoryRouteRouteImport } from './routes/_authenticated/dashboard/history/route'
 import { Route as AuthenticatedDashboardLiveRouteImport } from './routes/_authenticated/dashboard/live'
 import { Route as AuthenticatedDashboardRulesRouteImport } from './routes/_authenticated/dashboard/rules'
+import { Route as AuthenticatedDashboardHistoryIndexRouteImport } from './routes/_authenticated/dashboard/history/index'
+import { Route as AuthenticatedDashboardHistorySessionIdRouteImport } from './routes/_authenticated/dashboard/history/$sessionId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -43,8 +45,8 @@ const AuthenticatedDashboardIndexRoute =
     path: '/dashboard/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedDashboardHistoryRoute =
-  AuthenticatedDashboardHistoryRouteImport.update({
+const AuthenticatedDashboardHistoryRouteRoute =
+  AuthenticatedDashboardHistoryRouteRouteImport.update({
     id: '/dashboard/history',
     path: '/dashboard/history',
     getParentRoute: () => AuthenticatedRouteRoute,
@@ -61,24 +63,39 @@ const AuthenticatedDashboardRulesRoute =
     path: '/dashboard/rules',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDashboardHistoryIndexRoute =
+  AuthenticatedDashboardHistoryIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardHistoryRouteRoute,
+  } as any)
+const AuthenticatedDashboardHistorySessionIdRoute =
+  AuthenticatedDashboardHistorySessionIdRouteImport.update({
+    id: '/$sessionId',
+    path: '/$sessionId',
+    getParentRoute: () => AuthenticatedDashboardHistoryRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/login': typeof AuthLoginRoute
-  '/dashboard/history': typeof AuthenticatedDashboardHistoryRoute
+  '/dashboard/history': typeof AuthenticatedDashboardHistoryRouteRouteWithChildren
   '/dashboard/live': typeof AuthenticatedDashboardLiveRoute
   '/dashboard/rules': typeof AuthenticatedDashboardRulesRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/dashboard/history/$sessionId': typeof AuthenticatedDashboardHistorySessionIdRoute
+  '/dashboard/history/': typeof AuthenticatedDashboardHistoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/login': typeof AuthLoginRoute
-  '/dashboard/history': typeof AuthenticatedDashboardHistoryRoute
   '/dashboard/live': typeof AuthenticatedDashboardLiveRoute
   '/dashboard/rules': typeof AuthenticatedDashboardRulesRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/dashboard/history/$sessionId': typeof AuthenticatedDashboardHistorySessionIdRoute
+  '/dashboard/history': typeof AuthenticatedDashboardHistoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -86,10 +103,12 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/login': typeof AuthLoginRoute
-  '/_authenticated/dashboard/history': typeof AuthenticatedDashboardHistoryRoute
+  '/_authenticated/dashboard/history': typeof AuthenticatedDashboardHistoryRouteRouteWithChildren
   '/_authenticated/dashboard/live': typeof AuthenticatedDashboardLiveRoute
   '/_authenticated/dashboard/rules': typeof AuthenticatedDashboardRulesRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/dashboard/history/$sessionId': typeof AuthenticatedDashboardHistorySessionIdRoute
+  '/_authenticated/dashboard/history/': typeof AuthenticatedDashboardHistoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,15 +120,18 @@ export interface FileRouteTypes {
     | '/dashboard/live'
     | '/dashboard/rules'
     | '/dashboard/'
+    | '/dashboard/history/$sessionId'
+    | '/dashboard/history/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth/callback'
     | '/auth/login'
-    | '/dashboard/history'
     | '/dashboard/live'
     | '/dashboard/rules'
     | '/dashboard'
+    | '/dashboard/history/$sessionId'
+    | '/dashboard/history'
   id:
     | '__root__'
     | '/'
@@ -120,6 +142,8 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/live'
     | '/_authenticated/dashboard/rules'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/dashboard/history/$sessionId'
+    | '/_authenticated/dashboard/history/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -170,7 +194,7 @@ declare module '@tanstack/react-router' {
       id: '/_authenticated/dashboard/history'
       path: '/dashboard/history'
       fullPath: '/dashboard/history'
-      preLoaderRoute: typeof AuthenticatedDashboardHistoryRouteImport
+      preLoaderRoute: typeof AuthenticatedDashboardHistoryRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard/live': {
@@ -187,18 +211,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRulesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/dashboard/history/': {
+      id: '/_authenticated/dashboard/history/'
+      path: '/'
+      fullPath: '/dashboard/history/'
+      preLoaderRoute: typeof AuthenticatedDashboardHistoryIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardHistoryRouteRoute
+    }
+    '/_authenticated/dashboard/history/$sessionId': {
+      id: '/_authenticated/dashboard/history/$sessionId'
+      path: '/$sessionId'
+      fullPath: '/dashboard/history/$sessionId'
+      preLoaderRoute: typeof AuthenticatedDashboardHistorySessionIdRouteImport
+      parentRoute: typeof AuthenticatedDashboardHistoryRouteRoute
+    }
   }
 }
 
+interface AuthenticatedDashboardHistoryRouteRouteChildren {
+  AuthenticatedDashboardHistorySessionIdRoute: typeof AuthenticatedDashboardHistorySessionIdRoute
+  AuthenticatedDashboardHistoryIndexRoute: typeof AuthenticatedDashboardHistoryIndexRoute
+}
+
+const AuthenticatedDashboardHistoryRouteRouteChildren: AuthenticatedDashboardHistoryRouteRouteChildren =
+  {
+    AuthenticatedDashboardHistorySessionIdRoute:
+      AuthenticatedDashboardHistorySessionIdRoute,
+    AuthenticatedDashboardHistoryIndexRoute:
+      AuthenticatedDashboardHistoryIndexRoute,
+  }
+
+const AuthenticatedDashboardHistoryRouteRouteWithChildren =
+  AuthenticatedDashboardHistoryRouteRoute._addFileChildren(
+    AuthenticatedDashboardHistoryRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedDashboardHistoryRoute: typeof AuthenticatedDashboardHistoryRoute
+  AuthenticatedDashboardHistoryRouteRoute: typeof AuthenticatedDashboardHistoryRouteRouteWithChildren
   AuthenticatedDashboardLiveRoute: typeof AuthenticatedDashboardLiveRoute
   AuthenticatedDashboardRulesRoute: typeof AuthenticatedDashboardRulesRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedDashboardHistoryRoute: AuthenticatedDashboardHistoryRoute,
+  AuthenticatedDashboardHistoryRouteRoute:
+    AuthenticatedDashboardHistoryRouteRouteWithChildren,
   AuthenticatedDashboardLiveRoute: AuthenticatedDashboardLiveRoute,
   AuthenticatedDashboardRulesRoute: AuthenticatedDashboardRulesRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,

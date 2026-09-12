@@ -159,7 +159,20 @@ export function RuleFormDialog({
                 min="0"
                 max="1"
                 value={threshold}
-                onChange={(e) => setThreshold(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value
+
+                  if (value === "") {
+                    setThreshold("")
+                    return
+                  }
+
+                  const number = Number(value)
+
+                  if (number >= 0 && number <= 1) {
+                    setThreshold(value)
+                  }
+                }}
               />
             </Field>
           ) : (

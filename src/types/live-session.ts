@@ -40,3 +40,10 @@ export interface ChatMessageWithModeration {
     reason: string
   }>
 }
+
+export interface LiveSessionAnalytics {
+  totalMessages: number
+  flaggedMessages: number
+  flaggedPercentage: number
+  actionBreakdown: Record<string, number>
+}

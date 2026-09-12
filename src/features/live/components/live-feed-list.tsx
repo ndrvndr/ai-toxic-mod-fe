@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge"
 import type { ChatMessageEvent } from "@/types/live-session"
+import { MessagesSquare } from "lucide-react"
 
 interface FeedItem extends ChatMessageEvent {
   actionStatus?: "success" | "failed"
@@ -8,7 +9,12 @@ interface FeedItem extends ChatMessageEvent {
 
 export function LiveFeedList({ messages }: { messages: FeedItem[] }) {
   if (messages.length === 0) {
-    return <p className="text-muted-foreground">Waiting for chat messages...</p>
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-y-4">
+        <MessagesSquare className="size-24 animate-bounce" />
+        <p className="text-muted-foreground">Waiting for chat messages...</p>
+      </div>
+    )
   }
 
   return (
