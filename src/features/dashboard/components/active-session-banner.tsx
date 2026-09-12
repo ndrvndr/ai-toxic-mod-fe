@@ -34,6 +34,7 @@ export function ActiveSessionBanner({
           </p>
           <Button
             variant="outline"
+            nativeButton={false}
             render={<Link to="/dashboard/live">Go to Live Monitoring</Link>}
           />
         </CardContent>
@@ -46,9 +47,14 @@ export function ActiveSessionBanner({
       <CardContent className="flex items-center justify-between py-4">
         <p>
           🔴 Currently monitoring:{" "}
-          <span className="font-medium">{session.platformLiveId}</span>
+          <span className="font-medium">
+            {session.title ?? session.platformLiveId}
+          </span>
         </p>
-        <Button render={<Link to="/dashboard/live">View Live Feed</Link>} />
+        <Button
+          nativeButton={false}
+          render={<Link to="/dashboard/live">View Live Feed</Link>}
+        />
       </CardContent>
     </Card>
   )

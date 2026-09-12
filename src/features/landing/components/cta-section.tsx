@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router"
+
 import { Button } from "@/components/ui/button"
 
 export function CtaSection() {
@@ -12,11 +14,8 @@ export function CtaSection() {
       <Button
         size="lg"
         className="w-full sm:w-auto"
-        render={
-          <a href={`${import.meta.env.VITE_API_URL}/auth/login`}>
-            Login with YouTube
-          </a>
-        }
+        nativeButton={false}
+        render={<Link to="/auth/login">Login with YouTube to get started</Link>}
       />
     </section>
   )

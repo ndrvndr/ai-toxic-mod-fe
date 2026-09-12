@@ -16,7 +16,7 @@ interface StatCardsProps {
 export function StatCards({ overview, isLoading }: StatCardsProps) {
   const stats: StatItem[] = [
     {
-      label: "Total Sessions",
+      label: "Total Streams",
       value: String(overview?.totalSessions ?? 0),
     },
     {

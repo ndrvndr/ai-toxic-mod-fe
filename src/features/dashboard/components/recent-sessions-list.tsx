@@ -18,7 +18,7 @@ export function RecentSessionsList({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base">Recent Sessions</CardTitle>
+        <CardTitle className="text-base">Recent Streams</CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
         {isLoading ? (
@@ -34,9 +34,11 @@ export function RecentSessionsList({
               key={session.id}
               to="/dashboard/history/$sessionId"
               params={{ sessionId: session.id }}
-              className="flex items-center justify-between rounded-md p-2 hover:bg-muted"
+              className="flex items-center justify-between rounded-md py-2 hover:bg-muted"
             >
-              <span className="text-sm">{session.platformLiveId}</span>
+              <span className="text-sm">
+                {session.title ?? session.platformLiveId}
+              </span>
               <div className="flex items-center gap-2">
                 <span className="text-xs text-muted-foreground">
                   {new Date(session.startedAt).toLocaleDateString()}

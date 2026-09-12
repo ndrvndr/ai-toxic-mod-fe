@@ -7,7 +7,7 @@ export function SessionDetailPage({ sessionId }: { sessionId: string }) {
 
   return (
     <div className="flex flex-1 flex-col gap-y-6">
-      <h1 className="text-2xl font-semibold">Session Detail</h1>
+      <h1 className="text-2xl font-semibold">Stream Detail</h1>
       <AnalyticsSummary analytics={analytics} isLoading={isLoading} />
       <div className="flex flex-1 flex-col">
         <h2 className="mb-2 text-lg font-medium">Flagged Messages</h2>

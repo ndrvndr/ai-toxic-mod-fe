@@ -13,7 +13,7 @@ export function SessionStatusCard({
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center justify-between text-base">
-          <span>Session: {session.platformLiveId}</span>
+          <span>Stream: {session.title ?? session.platformLiveId}</span>
           <Badge variant={connected ? "default" : "secondary"}>
             {connected ? "Connected" : "Connecting..."}
           </Badge>

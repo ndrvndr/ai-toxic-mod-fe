@@ -8,7 +8,7 @@ import type { LiveSession } from "@/types/live-session"
 
 const sessionColumns: DataTableColumn<LiveSession>[] = [
   {
-    header: "Broadcast ID",
+    header: "Stream",
     className: "w-[50%]",
     cell: (session) => (
       <Link
@@ -16,7 +16,7 @@ const sessionColumns: DataTableColumn<LiveSession>[] = [
         params={{ sessionId: session.id }}
         className="text-primary hover:underline"
       >
-        {session.platformLiveId}
+        {session.title ?? session.platformLiveId}
       </Link>
     ),
   },
