@@ -46,7 +46,7 @@ export function LivePage() {
       ) : (
         <div className="flex flex-1 flex-col items-center justify-center gap-y-4">
           <RadioOff className="size-24" />
-          <p className="text-muted-foreground">
+          <p className="text-center text-muted-foreground">
             No active monitoring session. Start a live stream on YouTube, then
             click "Start Monitoring".
           </p>

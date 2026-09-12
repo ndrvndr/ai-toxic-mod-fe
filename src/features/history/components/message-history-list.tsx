@@ -31,7 +31,7 @@ export function MessageHistoryList({
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-y-4">
         <FlagOff className="size-24" />
-        <p className="text-muted-foreground">
+        <p className="text-center text-muted-foreground">
           No flagged messages in this session.
         </p>
       </div>

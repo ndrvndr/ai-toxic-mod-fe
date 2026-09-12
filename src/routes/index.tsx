@@ -1,9 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/")({ component: App })
+import { LandingPage } from "@/features/landing/landing-page"
 
-function App() {
-  return (
-    <div className="grid min-h-screen place-items-center">Hello World!</div>
-  )
-}
+export const Route = createFileRoute("/")({ component: LandingPage })
