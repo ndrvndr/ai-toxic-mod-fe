@@ -1,20 +1,24 @@
 import { queryOptions } from "@tanstack/react-query"
 
+import type { HistoryListParams } from "@/types/history"
+
 import { HistoryServices } from "../services/history.service"
 
 export const historyKeys = {
   all: ["history"] as const,
-  list: () => [...historyKeys.all, "list"] as const,
+  list: (params: HistoryListParams) =>
+    [...historyKeys.all, "list", params] as const,
   analytics: (sessionId: string) =>
     [...historyKeys.all, sessionId, "analytics"] as const,
   messages: (sessionId: string) =>
     [...historyKeys.all, sessionId, "messages"] as const,
 }
 
-export const sessionsListQueryOptions = queryOptions({
-  queryKey: historyKeys.list(),
-  queryFn: HistoryServices.listSessions,
-})
+export const sessionsListQueryOptions = (params: HistoryListParams) =>
+  queryOptions({
+    queryKey: historyKeys.list(params),
+    queryFn: () => HistoryServices.listSessions(params),
+  })
 
 export const sessionAnalyticsQueryOptions = (sessionId: string) =>
   queryOptions({

@@ -1,6 +1,7 @@
 import { TanStackDevtools } from "@tanstack/react-devtools"
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
+import { NuqsAdapter } from "nuqs/adapters/tanstack-router"
 
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toast"
@@ -45,18 +46,20 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <ThemeProvider defaultTheme="system" storageKey="theme">
-          {children}
-          <TanStackDevtools
-            config={{
-              position: "bottom-right",
-            }}
-            plugins={[
-              {
-                name: "Tanstack Router",
-                render: <TanStackRouterDevtoolsPanel />,
-              },
-            ]}
-          />
+          <NuqsAdapter>
+            {children}
+            <TanStackDevtools
+              config={{
+                position: "bottom-right",
+              }}
+              plugins={[
+                {
+                  name: "Tanstack Router",
+                  render: <TanStackRouterDevtoolsPanel />,
+                },
+              ]}
+            />
+          </NuqsAdapter>
         </ThemeProvider>
         <Toaster />
         <Scripts />
