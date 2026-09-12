@@ -47,3 +47,14 @@ export interface LiveSessionAnalytics {
   flaggedPercentage: number
   actionBreakdown: Record<string, number>
 }
+
+export interface DashboardOverview {
+  totalSessions: number
+  activeSession: LiveSession | null
+  totalMessages: number
+  totalFlagged: number
+  flaggedPercentage: number
+  actionBreakdown: Record<string, number>
+  totalRules: number
+  recentSessions: LiveSession[]
+}
