@@ -24,6 +24,7 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-2">
           <Button
             variant="ghost"
+            nativeButton={false}
             render={
               <a
                 href="https://github.com/ndrvndr/ai-toxic-mod-fe"

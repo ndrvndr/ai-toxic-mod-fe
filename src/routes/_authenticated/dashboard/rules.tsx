@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/_authenticated/dashboard/rules")({
-  component: RouteComponent,
-})
+import { RulesPage } from "@/features/rules/rules-page"
 
-function RouteComponent() {
-  return <div>Hello "/_authenticated/dashboard/rules"!</div>
-}
+export const Route = createFileRoute("/_authenticated/dashboard/rules")({
+  component: RulesPage,
+})

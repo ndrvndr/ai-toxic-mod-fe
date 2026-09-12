@@ -3,11 +3,11 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { AuthServices } from "@/features/auth/services/auth.service"
+import { getCurrentUser } from "@/features/auth/services/get-current-user"
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async () => {
-    const currentUser = await AuthServices.getCurrentUser()
+    const currentUser = await getCurrentUser()
 
     if (!currentUser) {
       throw redirect({ to: "/auth/login" })

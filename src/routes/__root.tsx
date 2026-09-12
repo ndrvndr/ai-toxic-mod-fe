@@ -3,6 +3,7 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 
 import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toast"
 
 import appCss from "../styles.css?url"
 
@@ -57,6 +58,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             ]}
           />
         </ThemeProvider>
+        <Toaster />
         <Scripts />
       </body>
     </html>

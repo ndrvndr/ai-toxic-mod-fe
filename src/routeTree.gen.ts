@@ -28,14 +28,14 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthCallbackRoute = AuthCallbackRouteImport.update({
-  id: '/callback',
-  path: '/callback',
-  getParentRoute: () => AuthRouteRoute,
+  id: '/auth/callback',
+  path: '/auth/callback',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => AuthRouteRoute,
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
@@ -125,6 +125,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthCallbackRoute: typeof AuthCallbackRoute
+  AuthLoginRoute: typeof AuthLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -145,17 +147,17 @@ declare module '@tanstack/react-router' {
     }
     '/auth/callback': {
       id: '/auth/callback'
-      path: '/callback'
+      path: '/auth/callback'
       fullPath: '/auth/callback'
       preLoaderRoute: typeof AuthCallbackRouteImport
-      parentRoute: typeof AuthRouteRoute
+      parentRoute: typeof rootRouteImport
     }
     '/auth/login': {
       id: '/auth/login'
-      path: '/login'
+      path: '/auth/login'
       fullPath: '/auth/login'
       preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof AuthRouteRoute
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
@@ -208,6 +210,8 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthCallbackRoute: AuthCallbackRoute,
+  AuthLoginRoute: AuthLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
