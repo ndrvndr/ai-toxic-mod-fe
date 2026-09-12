@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/_authenticated/dashboard/live")({
-  component: RouteComponent,
-})
+import { LivePage } from "@/features/live/live-page"
 
-function RouteComponent() {
-  return <div>Hello "/_authenticated/dashboard/live"!</div>
-}
+export const Route = createFileRoute("/_authenticated/dashboard/live")({
+  component: LivePage,
+})
