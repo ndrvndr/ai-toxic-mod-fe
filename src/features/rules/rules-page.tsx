@@ -91,15 +91,12 @@ export function RulesPage() {
         isSubmitting={isCreating || isUpdating}
       />
 
-      {isLoading ? (
-        <p className="text-muted-foreground">Loading rules...</p>
-      ) : rules.length === 0 ? (
-        <p className="text-muted-foreground">
-          No rules yet. Add one to get started.
-        </p>
-      ) : (
-        <RulesTable rules={rules} onEdit={handleEdit} onDelete={handleDelete} />
-      )}
+      <RulesTable
+        rules={rules}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        isLoading={isLoading}
+      />
 
       <DeleteRuleDialog
         rule={ruleToDelete}
