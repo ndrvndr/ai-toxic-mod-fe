@@ -27,7 +27,7 @@ export function MessageHistoryList({
     )
   }
 
-  if (flaggedOnly.length === 2) {
+  if (flaggedOnly.length === 0) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-y-4">
         <FlagOff className="size-24" />
