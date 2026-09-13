@@ -1,7 +1,14 @@
-import { LoaderCircle, RadioOff } from "lucide-react"
+import { AlertCircleIcon, LoaderCircle, RadioOff, X } from "lucide-react"
 
 import { Skeleton } from "@/components/ui/skeleton"
 
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
+import { Button } from "@/components/ui/button"
 import { LiveFeedList } from "./components/live-feed-list"
 import { MonitoringControls } from "./components/monitoring-controls"
 import { SessionStatusCard } from "./components/session-status-card"
@@ -10,9 +17,8 @@ import { useLiveMonitoring } from "./hooks/use-live-monitoring"
 
 export function LivePage() {
   const { activeSession, isLoading } = useLiveMonitoring()
-  const { messages, connected, isLoadingHistory } = useLiveFeed(
-    activeSession?.id
-  )
+  const { messages, connected, isLoadingHistory, systemAlert, dismissAlert } =
+    useLiveFeed(activeSession?.id)
 
   if (isLoading) {
     return (
@@ -28,6 +34,19 @@ export function LivePage() {
         <h1 className="text-2xl font-semibold">Live Monitoring</h1>
         <MonitoringControls />
       </div>
+
+      {systemAlert && (
+        <Alert variant="destructive">
+          <AlertCircleIcon />
+          <AlertTitle>Moderation Alert</AlertTitle>
+          <AlertDescription>{systemAlert.message}</AlertDescription>
+          <AlertAction>
+            <Button variant="ghost" size="icon" onClick={dismissAlert}>
+              <X />
+            </Button>
+          </AlertAction>
+        </Alert>
+      )}
 
       {activeSession ? (
         <>

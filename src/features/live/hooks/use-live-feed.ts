@@ -17,6 +17,10 @@ interface FeedItem extends ChatMessageEvent {
 export function useLiveFeed(liveSessionId: string | undefined) {
   const [messages, setMessages] = useState<FeedItem[]>([])
   const [connected, setConnected] = useState(false)
+  const [systemAlert, setSystemAlert] = useState<{
+    severity: "error" | "warning"
+    message: string
+  } | null>(null)
 
   const historyQuery = useQuery({
     ...liveSessionMessagesQueryOptions(liveSessionId ?? ""),
@@ -82,6 +86,13 @@ export function useLiveFeed(liveSessionId: string | undefined) {
       )
     })
 
+    socket.on(
+      "system-alert",
+      (payload: { severity: "error" | "warning"; message: string }) => {
+        setSystemAlert(payload)
+      }
+    )
+
     socket.on("disconnect", () => setConnected(false))
 
     return () => {
@@ -89,5 +100,11 @@ export function useLiveFeed(liveSessionId: string | undefined) {
     }
   }, [liveSessionId])
 
-  return { messages, connected, isLoadingHistory: historyQuery.isLoading }
+  return {
+    messages,
+    connected,
+    isLoadingHistory: historyQuery.isLoading,
+    systemAlert,
+    dismissAlert: () => setSystemAlert(null),
+  }
 }
