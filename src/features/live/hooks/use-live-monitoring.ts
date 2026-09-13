@@ -9,8 +9,6 @@ import {
   stopMonitoringMutationOptions,
 } from "../queries/live-sessions.query"
 
-const STORAGE_KEY = "activeLiveSessionId"
-
 export function useLiveMonitoring() {
   const queryClient = useQueryClient()
 
@@ -18,8 +16,7 @@ export function useLiveMonitoring() {
 
   const startMutation = useMutation({
     ...startMonitoringMutationOptions,
-    onSuccess: ({ session }) => {
-      localStorage.setItem(STORAGE_KEY, session.id)
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: liveSessionsKeys.all })
       toast.add({ type: "success", title: "Monitoring started" })
     },
@@ -34,7 +31,6 @@ export function useLiveMonitoring() {
   const stopMutation = useMutation({
     ...stopMonitoringMutationOptions,
     onSuccess: () => {
-      localStorage.removeItem(STORAGE_KEY)
       queryClient.invalidateQueries({ queryKey: liveSessionsKeys.all })
       toast.add({ type: "success", title: "Monitoring stopped" })
     },
@@ -46,9 +42,7 @@ export function useLiveMonitoring() {
     },
   })
 
-  const activeSession = sessionsQuery.data?.find(
-    (s) => s.id === localStorage.getItem(STORAGE_KEY) && s.status === "live"
-  )
+  const activeSession = sessionsQuery.data?.find((s) => s.status === "live")
 
   return {
     activeSession,
